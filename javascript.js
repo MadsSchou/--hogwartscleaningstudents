@@ -56,6 +56,20 @@ function opretStuderende() {
       studerende.middleName = "";
     }
 
+    // Gender: Første bogstav til gender sættes til upper case og resten til lower case
+    studerende.gender = gender.charAt(0).toUpperCase() + gender.substring(1).toLowerCase();
+
+    // Imgsrc: Find destinationen og gør alt til lower case.
+    studerende.imgSrc = `./images/${fullName.substring(0, fullName.indexOf(" ")).toLowerCase()}_.png`;
+    studerende.imgSrc = `./images/${fullName.substring(fullName.lastIndexOf(" ") + 1, fullName.lastIndexOf(" ") + 2).toLowerCase() + fullName.substring(fullName.lastIndexOf(" ") + 2).toLowerCase()}_${fullName.substring(0, 1).toUpperCase().toLowerCase()}.png`;
+
+    /*House: Første bogstav til gender sættes til upper case og resten til lower case*/
+    studerende.house = house.charAt(0).toUpperCase() + house.substring(1).toLowerCase();
+
+    alleStuderende.push(studerende);
+  });
+  visAlleStuderende();
+}
 
 /* Vis arrayet i en table */
 function visAlleStuderende() {
