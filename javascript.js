@@ -1,9 +1,9 @@
 `use strict`;
-// Array for all students
-const allStudents = [];
+// Array for alle studerende
+const alleStuderende = [];
 
 // Student objects
-const Student = {
+const Studerende = {
   firstName: "",
   lastName: "",
   middleName: "",
@@ -13,7 +13,7 @@ const Student = {
   house: "",
 };
 // JSON url
-const urlStudentList = "https://petlatkea.dk/2021/hogwarts/students.json";
+const urlStuderendeListe = "https://petlatkea.dk/2021/hogwarts/students.json";
 
 window.addEventListener("DOMContentLoaded", start);
 
@@ -22,36 +22,42 @@ function start() {
   loadJSON();
 }
 
-// Fetching JSON fil med studenter
+// Fetching JSON fil med studerende og vis arrayet i en table */
+
 async function loadJSON() {
   console.log("loadJSON");
-  const jsonData = await fetch(urlStudentList);
-  studentData = await jsonData.json();
-  console.table(studentData);
-  opretStudenter();
+  const jsonData = await fetch(urlStuderendeListe);
+  studerendeData = await jsonData.json();
+  console.table(studerendeData);
+  opretStuderende();
 }
-// Opret studenter
-function opretStudenter() {
-  console.log("opretStudenter");
-  studentData.forEach((elm) => {
-    const student = Object.create(Student);
+// Opret studerende
+function opretStuderende() {
+  console.log("opretStuderende");
+  studerendeData.forEach((elm) => {
+    const studerende = Object.create(Studerende);
 
-    // Variabler
+    /*Variabler fra arrarayet der skal ændres på*/
     let fullName = elm.fullname.trim();
     let house = elm.house.trim();
     let gender = elm.gender.trim();
 
     // Giver de forskellige opjekter en værdi
-    // Firstname: Første bogstav i fornavnet sættes til upper case og resten til lower case.
-    student.firstName = fullName.substring(0, 1).toUpperCase() + fullName.substring(1, fullName.indexOf(" ")).toLowerCase();
+    // Firstname, lastname og middlename: Første bogstav i fornavnet sættes til upper case og resten til lower case.
+    studerende.firstName = fullName.substring(0, 1).toUpperCase() + fullName.substring(1, fullName.indexOf(" ")).toLowerCase();
 
-    // Lastname: Første bogstav i efternavnet sættes til upper case og resten til lower case.
-    student.lastName = fullName.substring(fullName.lastIndexOf(" ") + 1, fullName.lastIndexOf(" ") + 2).toUpperCase() + fullName.substring(fullName.lastIndexOf(" ") + 2).toLowerCase();
+    studerende.lastName = fullName.substring(fullName.lastIndexOf(" ") + 1, fullName.lastIndexOf(" ") + 2).toUpperCase() + fullName.substring(fullName.lastIndexOf(" ") + 2).toLowerCase();
 
-    // Middlename: Første bogstav i mellemnavnet sættes til upper case og resten til lower case.
-    student.middleName = fullName.substring(fullName.indexOf(" "), fullName.lastIndexOf(" ")).trim().substring(0, 1).toUpperCase() + fullName.substring(fullName.indexOf(" "), fullName.lastIndexOf(" ")).trim().substring(1).toLowerCase();
-  
-/* Table */
-function showAllStudents() {
-  console.table(allStudents);
+    studerende.middleName = fullName.substring(fullName.indexOf(" "), fullName.lastIndexOf(" ")).trim().substring(0, 1).toUpperCase() + fullName.substring(fullName.indexOf(" "), fullName.lastIndexOf(" ")).trim().substring(1).toLowerCase();
+
+    // Nickname: Find nickname med "" ved hjælp af et if statement.
+    if (fullName.includes(`"`)) {
+      studerende.nickName = fullName.substring(fullName.indexOf(`"`) + 1, fullName.lastIndexOf(`"`));
+      studerende.middleName = "";
+    }
+
+
+/* Vis arrayet i en table */
+function visAlleStuderende() {
+  console.table(alleStuderende);
 }
